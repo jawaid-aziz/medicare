@@ -1,15 +1,18 @@
-import { useState, useEffect, useRef } from "react";
-import { Button } from "@/components/ui/button";
-import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
-import { Badge } from "@/components/ui/badge";
+import { useState, useEffect } from "react"
+import { Button } from "@/components/ui/button"
+import { Card, CardContent, CardHeader, CardTitle, CardDescription } from "@/components/ui/card"
+import { Badge } from "@/components/ui/badge"
+import { Textarea } from "@/components/ui/textarea"
+import { Input } from "@/components/ui/input"
+import { Label } from "@/components/ui/label"
 import {
   Accordion,
   AccordionContent,
   AccordionItem,
   AccordionTrigger,
-} from "@/components/ui/accordion";
-import { Sheet, SheetContent, SheetTrigger } from "@/components/ui/sheet";
-import { Separator } from "@/components/ui/separator";
+} from "@/components/ui/accordion"
+import { Sheet, SheetContent, SheetTrigger } from "@/components/ui/sheet"
+import { Separator } from "@/components/ui/separator"
 import {
   HeartPulse,
   Menu,
@@ -17,7 +20,6 @@ import {
   Check,
   Users,
   CalendarCheck,
-  FileText,
   Clock,
   LayoutGrid,
   Search,
@@ -30,7 +32,8 @@ import {
   Building2,
   TrendingUp,
   MapPin,
-} from "lucide-react";
+  ArrowRight
+} from "lucide-react"
 
 // ─── DATA ────────────────────────────────────────────────────────────────────
 
@@ -40,14 +43,14 @@ const NAV_LINKS = [
   { label: "Pricing", href: "#pricing" },
   { label: "FAQ", href: "#faq" },
   { label: "Contact", href: "#contact" },
-];
+]
 
 const STATS = [
   { value: "500+", label: "Clinics Onboarded", icon: Building2 },
   { value: "1M+", label: "Appointments Managed", icon: CalendarCheck },
   { value: "99.9%", label: "Uptime Guaranteed", icon: TrendingUp },
   { value: "50+", label: "Cities Served", icon: MapPin },
-];
+]
 
 const FEATURES = [
   {
@@ -80,7 +83,7 @@ const FEATURES = [
     title: "Department-Wise Workflow",
     desc: "Organized by department — each doctor sees only their relevant appointments and lab orders for a focused experience.",
   },
-];
+]
 
 const STEPS = [
   {
@@ -98,7 +101,7 @@ const STEPS = [
     title: "Go Live",
     desc: "Start booking appointments, managing labs, and generating professional PDF reports from day one.",
   },
-];
+]
 
 const PLANS = [
   {
@@ -150,7 +153,7 @@ const PLANS = [
     cta: "Contact Sales",
     popular: false,
   },
-];
+]
 
 const TESTIMONIALS = [
   {
@@ -174,7 +177,7 @@ const TESTIMONIALS = [
     quote:
       "Department-wise filtering is a game changer. I only see my patients, my lab orders. No noise. MediCare keeps me focused on what actually matters.",
   },
-];
+]
 
 const FAQS = [
   {
@@ -201,68 +204,62 @@ const FAQS = [
     q: "Can I update appointment times after the patient has been seen?",
     a: "Yes. Our flexible time tracking feature lets receptionists update patient time-in and time-out at any point, regardless of the appointment's current status — giving you full control over your records.",
   },
-];
+]
 
 const FOOTER_LINKS = {
   Product: ["Features", "Pricing", "How It Works", "Changelog"],
   Company: ["About", "Blog", "Careers", "Press"],
   Support: ["FAQ", "Documentation", "Contact", "Status"],
   Legal: ["Privacy Policy", "Terms of Service", "HIPAA Compliance"],
-};
+}
 
 // ─── SUB-COMPONENTS ───────────────────────────────────────────────────────────
 
 function Navbar() {
-  const [open, setOpen] = useState(false);
-  const [scrolled, setScrolled] = useState(false);
+  const [open, setOpen] = useState(false)
+  const [scrolled, setScrolled] = useState(false)
 
   useEffect(() => {
-    const onScroll = () => setScrolled(window.scrollY > 20);
-    window.addEventListener("scroll", onScroll);
-    return () => window.removeEventListener("scroll", onScroll);
-  }, []);
+    const onScroll = () => setScrolled(window.scrollY > 20)
+    window.addEventListener("scroll", onScroll)
+    return () => window.removeEventListener("scroll", onScroll)
+  }, [])
 
   return (
     <nav
-      className={`fixed top-0 left-0 right-0 z-50 transition-all duration-300 ${
+      className={`fixed top-0 right-0 left-0 z-50 transition-all duration-300 ${
         scrolled
-          ? "backdrop-blur-md bg-white/90 border-b border-[#E2E8F0] shadow-sm"
+          ? "border-b border-[#E2E8F0] bg-white/90 shadow-sm backdrop-blur-md"
           : "bg-transparent"
       }`}
       aria-label="Main navigation"
     >
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 flex items-center justify-between h-16">
+      <div className="mx-auto flex h-16 max-w-7xl items-center justify-between px-4 sm:px-6 lg:px-8">
         {/* Logo */}
-        <a href="#" className="flex items-center gap-2 group">
-          <div className="w-8 h-8 bg-[#DC2626] rounded-lg flex items-center justify-center">
-            <HeartPulse className="w-5 h-5 text-white" />
+        <a href="#" className="group flex items-center gap-2">
+          <div className="flex h-8 w-8 items-center justify-center rounded-lg bg-[#DC2626]">
+            <HeartPulse className="h-5 w-5 text-white" />
           </div>
-          <span className="text-[#7F1D1D] font-bold text-xl font-['Plus_Jakarta_Sans']">
+          <span className="font-['Plus_Jakarta_Sans'] text-xl font-bold text-[#7F1D1D]">
             MediCare
           </span>
         </a>
 
         {/* Desktop nav */}
-        <div className="hidden md:flex items-center gap-8">
+        <div className="hidden items-center gap-8 md:flex">
           {NAV_LINKS.map((l) => (
             <a
               key={l.label}
               href={l.href}
-              className="text-[#64748B] hover:text-[#7F1D1D] text-sm font-medium transition-colors"
+              className="text-sm font-medium text-[#64748B] transition-colors hover:text-[#7F1D1D]"
             >
               {l.label}
             </a>
           ))}
         </div>
 
-        <div className="hidden md:flex items-center gap-3">
-          <Button
-            variant="ghost"
-            className="text-[#7F1D1D] font-medium text-sm"
-          >
-            Sign In
-          </Button>
-          <Button className="bg-[#DC2626] hover:bg-red-700 text-white font-semibold text-sm px-5">
+        <div className="hidden items-center md:flex">
+          <Button className="cursor-pointer bg-[#DC2626] px-5 text-sm font-semibold text-white hover:bg-red-700">
             Get Started
           </Button>
         </div>
@@ -271,26 +268,26 @@ function Navbar() {
         <Sheet open={open} onOpenChange={setOpen}>
           <SheetTrigger asChild>
             <button
-              className="md:hidden p-2 rounded-lg hover:bg-[#F8FAFC]"
+              className="rounded-lg p-2 hover:bg-[#F8FAFC] md:hidden"
               aria-label="Open menu"
             >
-              <Menu className="w-5 h-5 text-[#7F1D1D]" />
+              <Menu className="h-5 w-5 text-[#7F1D1D]" />
             </button>
           </SheetTrigger>
           <SheetContent side="right" className="w-72 bg-white">
-            <div className="flex flex-col gap-6 mt-8">
+            <div className="mt-8 flex flex-col gap-6">
               {NAV_LINKS.map((l) => (
                 <a
                   key={l.label}
                   href={l.href}
                   onClick={() => setOpen(false)}
-                  className="text-[#7F1D1D] font-medium text-base"
+                  className="text-base font-medium text-[#7F1D1D]"
                 >
                   {l.label}
                 </a>
               ))}
               <Separator />
-              <Button className="bg-[#DC2626] text-white w-full">
+              <Button className="w-full bg-[#DC2626] text-white">
                 Get Started
               </Button>
             </div>
@@ -298,40 +295,40 @@ function Navbar() {
         </Sheet>
       </div>
     </nav>
-  );
+  )
 }
 
 function Hero() {
   return (
-    <section className="pt-24 pb-16 bg-[#F8FAFC] overflow-hidden" id="hero">
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        <div className="grid lg:grid-cols-2 gap-12 items-center">
+    <section className="overflow-hidden bg-[#F8FAFC] pt-24 pb-16" id="hero">
+      <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
+        <div className="grid items-center gap-12 lg:grid-cols-2">
           {/* Text */}
-          <div className="fade-section opacity-0 translate-y-4 transition-all duration-700">
-            <Badge className="mb-6 bg-red-50 text-[#DC2626] border border-red-200 font-semibold px-3 py-1 text-xs uppercase tracking-wide">
+          <div className="fade-section translate-y-4 opacity-0 transition-all duration-700">
+            <Badge className="mb-6 border border-red-200 bg-red-50 px-3 py-1 text-xs font-semibold tracking-wide text-[#DC2626] uppercase">
               Clinic & Lab Management SaaS
             </Badge>
-            <h1 className="text-5xl lg:text-6xl font-extrabold text-[#7F1D1D] leading-tight font-['Plus_Jakarta_Sans'] mb-6">
+            <h1 className="mb-6 font-['Plus_Jakarta_Sans'] text-5xl leading-tight font-extrabold text-[#7F1D1D] lg:text-6xl">
               Manage Every Appointment.{" "}
               <span className="text-[#DC2626]">Every Lab.</span> Every Patient.
             </h1>
-            <p className="text-[#64748B] text-lg leading-relaxed mb-8 max-w-lg">
+            <p className="mb-8 max-w-lg text-lg leading-relaxed text-[#64748B]">
               MediCare is the all-in-one SaaS platform built for clinics and
-              hospitals. Streamline bookings, generate QR-linked lab reports, and
-              empower every role — from receptionist to specialist — with tools
-              they'll actually use.
+              hospitals. Streamline bookings, generate QR-linked lab reports,
+              and empower every role — from receptionist to specialist — with
+              tools they'll actually use.
             </p>
-            <div className="flex flex-wrap gap-3 mb-10">
+            <div className="mb-10 flex flex-wrap gap-3">
               <Button
                 size="lg"
-                className="bg-[#DC2626] hover:bg-red-700 text-white font-bold px-8 py-3 text-base shadow-lg shadow-red-200"
+                className="cursor-pointer bg-[#DC2626] px-8 py-3 text-base font-bold text-white shadow-lg shadow-red-200 hover:bg-red-700"
               >
                 Request a Demo
               </Button>
               <Button
                 size="lg"
                 variant="outline"
-                className="border-2 border-[#7F1D1D] text-[#7F1D1D] font-bold px-8 py-3 text-base hover:bg-[#7F1D1D] hover:text-white"
+                className="border-2 border-[#7F1D1D] px-8 py-3 text-base font-bold text-[#7F1D1D] hover:bg-[#7F1D1D] hover:text-white"
               >
                 View Features
               </Button>
@@ -341,9 +338,9 @@ function Hero() {
                 (t) => (
                   <Badge
                     key={t}
-                    className="bg-white border border-[#E2E8F0] text-[#7F1D1D] font-medium px-3 py-1 shadow-sm"
+                    className="border border-[#E2E8F0] bg-white px-3 py-1 font-medium text-[#7F1D1D] shadow-sm"
                   >
-                    <ShieldCheck className="w-3 h-3 mr-1 text-[#DC2626] inline" />
+                    <ShieldCheck className="mr-1 inline h-3 w-3 text-[#DC2626]" />
                     {t}
                   </Badge>
                 )
@@ -352,21 +349,21 @@ function Hero() {
           </div>
 
           {/* Image */}
-          <div className="fade-section opacity-0 translate-y-4 transition-all duration-700 delay-200">
+          <div className="fade-section translate-y-4 opacity-0 transition-all delay-200 duration-700">
             <div className="relative">
-              <div className="absolute -inset-4 bg-linear-to-br from-red-100 to-slate-100 rounded-3xl -z-10" />
+              <div className="absolute -inset-4 -z-10 rounded-3xl bg-linear-to-br from-red-100 to-slate-100" />
               <img
                 src="https://images.unsplash.com/photo-1559757148-5c350d0d3c56?w=800&q=80"
                 alt="Doctor at a modern clinic reception desk"
-                className="w-full h-120 object-cover rounded-2xl shadow-2xl"
+                className="h-120 w-full rounded-2xl object-cover shadow-2xl"
               />
               {/* Floating stat card */}
-              <div className="absolute -bottom-6 -left-6 bg-white rounded-2xl shadow-xl px-5 py-4 border border-[#E2E8F0]">
-                <p className="text-xs text-[#64748B] font-medium mb-1">
+              <div className="absolute -bottom-6 -left-6 rounded-2xl border border-[#E2E8F0] bg-white px-5 py-4 shadow-xl">
+                <p className="mb-1 text-xs font-medium text-[#64748B]">
                   Today's Appointments
                 </p>
                 <p className="text-3xl font-extrabold text-[#7F1D1D]">142</p>
-                <p className="text-xs text-[#DC2626] font-semibold mt-1">
+                <p className="mt-1 text-xs font-semibold text-[#DC2626]">
                   ↑ 12% vs yesterday
                 </p>
               </div>
@@ -375,216 +372,216 @@ function Hero() {
         </div>
       </div>
     </section>
-  );
+  )
 }
 
 function StatsBar() {
   return (
     <section className="bg-[#7F1D1D] py-12">
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        <div className="grid grid-cols-2 lg:grid-cols-4 gap-8">
+      <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
+        <div className="grid grid-cols-2 gap-8 lg:grid-cols-4">
           {STATS.map(({ value, label, icon: Icon }) => (
             <div key={label} className="text-center">
-              <div className="flex justify-center mb-3">
-                <div className="w-10 h-10 bg-[#DC2626]/20 rounded-xl flex items-center justify-center">
-                  <Icon className="w-5 h-5 text-[#DC2626]" />
+              <div className="mb-3 flex justify-center">
+                <div className="flex h-10 w-10 items-center justify-center rounded-xl bg-[#DC2626]/20">
+                  <Icon className="h-5 w-5 text-[#DC2626]" />
                 </div>
               </div>
-              <p className="text-4xl font-extrabold text-white font-['Plus_Jakarta_Sans']">
+              <p className="font-['Plus_Jakarta_Sans'] text-4xl font-extrabold text-white">
                 {value}
               </p>
-              <p className="text-[#64748B] text-sm mt-1 font-medium">{label}</p>
+              <p className="mt-1 text-sm font-medium text-[#64748B]">{label}</p>
             </div>
           ))}
         </div>
       </div>
     </section>
-  );
+  )
 }
 
 function Features() {
   return (
-    <section id="features" className="py-24 bg-white">
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        <div className="text-center mb-16 fade-section opacity-0 translate-y-4 transition-all duration-700">
-          <Badge className="mb-4 bg-red-50 text-[#DC2626] border border-red-200 font-semibold px-3 py-1 text-xs uppercase tracking-wide">
+    <section id="features" className="bg-white py-24">
+      <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
+        <div className="fade-section mb-16 translate-y-4 text-center opacity-0 transition-all duration-700">
+          <Badge className="mb-4 border border-red-200 bg-red-50 px-3 py-1 text-xs font-semibold tracking-wide text-[#DC2626] uppercase">
             Features
           </Badge>
-          <h2 className="text-4xl font-extrabold text-[#7F1D1D] font-['Plus_Jakarta_Sans'] mb-4">
+          <h2 className="mb-4 font-['Plus_Jakarta_Sans'] text-4xl font-extrabold text-[#7F1D1D]">
             Everything Your Clinic Needs
           </h2>
-          <p className="text-[#64748B] text-lg max-w-2xl mx-auto">
+          <p className="mx-auto max-w-2xl text-lg text-[#64748B]">
             From front desk to specialist, MediCare gives every role in your
             clinic the tools they need to deliver exceptional patient care.
           </p>
         </div>
-        <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-6">
+        <div className="grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
           {FEATURES.map(({ icon: Icon, title, desc }) => (
             <Card
               key={title}
-              className="border border-[#E2E8F0] hover:shadow-lg hover:-translate-y-1 transition-all duration-200 fade-section opacity-0 translate-y-4"
+              className="fade-section translate-y-4 border border-[#E2E8F0] opacity-0 transition-all duration-200 hover:-translate-y-1 hover:shadow-lg"
             >
               <CardHeader className="pb-3">
-                <div className="w-12 h-12 bg-red-50 rounded-xl flex items-center justify-center mb-4">
-                  <Icon className="w-6 h-6 text-[#DC2626]" />
+                <div className="mb-4 flex h-12 w-12 items-center justify-center rounded-xl bg-red-50">
+                  <Icon className="h-6 w-6 text-[#DC2626]" />
                 </div>
-                <CardTitle className="text-[#7F1D1D] font-bold text-lg font-['Plus_Jakarta_Sans']">
+                <CardTitle className="font-['Plus_Jakarta_Sans'] text-lg font-bold text-[#7F1D1D]">
                   {title}
                 </CardTitle>
               </CardHeader>
               <CardContent>
-                <p className="text-[#64748B] text-sm leading-relaxed">{desc}</p>
+                <p className="text-sm leading-relaxed text-[#64748B]">{desc}</p>
               </CardContent>
             </Card>
           ))}
         </div>
       </div>
     </section>
-  );
+  )
 }
 
 function HowItWorks() {
   return (
-    <section id="how-it-works" className="py-24 bg-[#F8FAFC]">
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        <div className="text-center mb-16 fade-section opacity-0 translate-y-4 transition-all duration-700">
-          <Badge className="mb-4 bg-red-50 text-[#DC2626] border border-red-200 font-semibold px-3 py-1 text-xs uppercase tracking-wide">
+    <section id="how-it-works" className="bg-[#F8FAFC] py-24">
+      <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
+        <div className="fade-section mb-16 translate-y-4 text-center opacity-0 transition-all duration-700">
+          <Badge className="mb-4 border border-red-200 bg-red-50 px-3 py-1 text-xs font-semibold tracking-wide text-[#DC2626] uppercase">
             Process
           </Badge>
-          <h2 className="text-4xl font-extrabold text-[#7F1D1D] font-['Plus_Jakarta_Sans'] mb-4">
+          <h2 className="mb-4 font-['Plus_Jakarta_Sans'] text-4xl font-extrabold text-[#7F1D1D]">
             Up and Running in Minutes
           </h2>
-          <p className="text-[#64748B] text-lg max-w-xl mx-auto">
+          <p className="mx-auto max-w-xl text-lg text-[#64748B]">
             No lengthy setup, no IT team required. MediCare gets your clinic
             operational the same day you sign up.
           </p>
         </div>
 
-        <div className="relative grid md:grid-cols-3 gap-8 mb-16 fade-section opacity-0 translate-y-4 transition-all duration-700">
+        <div className="fade-section relative mb-16 grid translate-y-4 gap-8 opacity-0 transition-all duration-700 md:grid-cols-3">
           {/* Connector line (desktop) */}
-          <div className="hidden md:block absolute top-10 left-[20%] right-[20%] h-px border-t-2 border-dashed border-[#DC2626]/40" />
+          <div className="absolute top-10 right-[20%] left-[20%] hidden h-px border-t-2 border-dashed border-[#DC2626]/40 md:block" />
 
           {STEPS.map(({ num, title, desc }) => (
             <div key={num} className="flex flex-col items-center text-center">
-              <div className="w-20 h-20 rounded-full bg-[#DC2626] flex items-center justify-center mb-5 shadow-lg shadow-red-200 relative z-10">
-                <span className="text-white font-extrabold text-xl font-['Plus_Jakarta_Sans']">
+              <div className="relative z-10 mb-5 flex h-20 w-20 items-center justify-center rounded-full bg-[#DC2626] shadow-lg shadow-red-200">
+                <span className="font-['Plus_Jakarta_Sans'] text-xl font-extrabold text-white">
                   {num}
                 </span>
               </div>
-              <h3 className="text-[#7F1D1D] font-bold text-lg font-['Plus_Jakarta_Sans'] mb-2">
+              <h3 className="mb-2 font-['Plus_Jakarta_Sans'] text-lg font-bold text-[#7F1D1D]">
                 {title}
               </h3>
-              <p className="text-[#64748B] text-sm leading-relaxed">{desc}</p>
+              <p className="text-sm leading-relaxed text-[#64748B]">{desc}</p>
             </div>
           ))}
         </div>
 
-        <div className="fade-section opacity-0 translate-y-4 transition-all duration-700">
+        <div className="fade-section translate-y-4 opacity-0 transition-all duration-700">
           <img
             src="https://images.unsplash.com/photo-1504439468489-c8920d796a29?w=800&q=80"
             alt="Clinic team discussing patient management workflow"
-            className="w-full h-72 md:h-96 object-cover rounded-2xl shadow-xl"
+            className="h-72 w-full rounded-2xl object-cover shadow-xl md:h-96"
           />
         </div>
       </div>
     </section>
-  );
+  )
 }
 
 function DeepDives() {
   return (
-    <section className="py-24 bg-white">
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 space-y-24">
+    <section className="bg-white py-24">
+      <div className="mx-auto max-w-7xl space-y-24 px-4 sm:px-6 lg:px-8">
         {/* Row 1 */}
-        <div className="grid lg:grid-cols-2 gap-16 items-center fade-section opacity-0 translate-y-4 transition-all duration-700">
+        <div className="fade-section grid translate-y-4 items-center gap-16 opacity-0 transition-all duration-700 lg:grid-cols-2">
           <div className="order-2 lg:order-1">
             <img
               src="https://images.unsplash.com/photo-1576091160399-112ba8d25d1d?w=800&q=80"
               alt="Doctor reviewing lab results on a tablet"
-              className="w-full h-96 object-cover rounded-2xl shadow-xl"
+              className="h-96 w-full rounded-2xl object-cover shadow-xl"
             />
           </div>
           <div className="order-1 lg:order-2">
-            <Badge className="mb-4 bg-red-50 text-[#DC2626] border border-red-200 font-semibold px-3 py-1 text-xs uppercase tracking-wide">
+            <Badge className="mb-4 border border-red-200 bg-red-50 px-3 py-1 text-xs font-semibold tracking-wide text-[#DC2626] uppercase">
               Lab Reports
             </Badge>
-            <h2 className="text-3xl font-extrabold text-[#7F1D1D] font-['Plus_Jakarta_Sans'] mb-5">
+            <h2 className="mb-5 font-['Plus_Jakarta_Sans'] text-3xl font-extrabold text-[#7F1D1D]">
               QR-Enabled Lab Reports & Prescriptions
             </h2>
-            <p className="text-[#64748B] leading-relaxed mb-6">
+            <p className="mb-6 leading-relaxed text-[#64748B]">
               When a doctor generates a PDF prescription or lab report in
-              MediCare, the system automatically embeds a unique QR code. Patients
-              scan it with any smartphone camera and instantly access their
-              securely hosted report — no app download, no login, no friction. One
-              scan is all it takes to put health information in the patient's
-              hands.
+              MediCare, the system automatically embeds a unique QR code.
+              Patients scan it with any smartphone camera and instantly access
+              their securely hosted report — no app download, no login, no
+              friction. One scan is all it takes to put health information in
+              the patient's hands.
             </p>
             <a
               href="#features"
-              className="inline-flex items-center text-[#DC2626] font-semibold hover:gap-2 gap-1 transition-all"
+              className="inline-flex items-center gap-1 font-semibold text-[#DC2626] transition-all hover:gap-2"
             >
-              Learn More <ChevronRight className="w-4 h-4" />
+              Learn More <ChevronRight className="h-4 w-4" />
             </a>
           </div>
         </div>
 
         {/* Row 2 */}
-        <div className="grid lg:grid-cols-2 gap-16 items-center fade-section opacity-0 translate-y-4 transition-all duration-700">
+        <div className="fade-section grid translate-y-4 items-center gap-16 opacity-0 transition-all duration-700 lg:grid-cols-2">
           <div>
-            <Badge className="mb-4 bg-red-50 text-[#DC2626] border border-red-200 font-semibold px-3 py-1 text-xs uppercase tracking-wide">
+            <Badge className="mb-4 border border-red-200 bg-red-50 px-3 py-1 text-xs font-semibold tracking-wide text-[#DC2626] uppercase">
               Appointments
             </Badge>
-            <h2 className="text-3xl font-extrabold text-[#7F1D1D] font-['Plus_Jakarta_Sans'] mb-5">
+            <h2 className="mb-5 font-['Plus_Jakarta_Sans'] text-3xl font-extrabold text-[#7F1D1D]">
               Effortless Appointment Management
             </h2>
-            <p className="text-[#64748B] leading-relaxed mb-6">
+            <p className="mb-6 leading-relaxed text-[#64748B]">
               Receptionists create rich appointment forms capturing all relevant
               patient details — from symptoms to insurance. Real-time status
-              updates flow to the doctor's dashboard automatically, and time-in /
-              time-out can be updated at any point in the workflow, giving your
-              front desk complete flexibility without ever disrupting clinical
-              operations.
+              updates flow to the doctor's dashboard automatically, and time-in
+              / time-out can be updated at any point in the workflow, giving
+              your front desk complete flexibility without ever disrupting
+              clinical operations.
             </p>
             <a
               href="#features"
-              className="inline-flex items-center text-[#DC2626] font-semibold hover:gap-2 gap-1 transition-all"
+              className="inline-flex items-center gap-1 font-semibold text-[#DC2626] transition-all hover:gap-2"
             >
-              Learn More <ChevronRight className="w-4 h-4" />
+              Learn More <ChevronRight className="h-4 w-4" />
             </a>
           </div>
           <div>
             <img
               src="https://images.unsplash.com/photo-1551190822-a9333d879b1f?w=800&q=80"
               alt="Receptionist managing appointments on a computer"
-              className="w-full h-96 object-cover rounded-2xl shadow-xl"
+              className="h-96 w-full rounded-2xl object-cover shadow-xl"
             />
           </div>
         </div>
       </div>
     </section>
-  );
+  )
 }
 
 function Pricing() {
-  const [annual, setAnnual] = useState(false);
+  const [annual, setAnnual] = useState(false)
 
   return (
-    <section id="pricing" className="py-24 bg-[#F8FAFC]">
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        <div className="text-center mb-12 fade-section opacity-0 translate-y-4 transition-all duration-700">
-          <Badge className="mb-4 bg-red-50 text-[#DC2626] border border-red-200 font-semibold px-3 py-1 text-xs uppercase tracking-wide">
+    <section id="pricing" className="bg-[#F8FAFC] py-24">
+      <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
+        <div className="fade-section mb-12 translate-y-4 text-center opacity-0 transition-all duration-700">
+          <Badge className="mb-4 border border-red-200 bg-red-50 px-3 py-1 text-xs font-semibold tracking-wide text-[#DC2626] uppercase">
             Pricing
           </Badge>
-          <h2 className="text-4xl font-extrabold text-[#7F1D1D] font-['Plus_Jakarta_Sans'] mb-4">
+          <h2 className="mb-4 font-['Plus_Jakarta_Sans'] text-4xl font-extrabold text-[#7F1D1D]">
             Simple, Transparent Pricing
           </h2>
-          <p className="text-[#64748B] text-lg mb-8">
+          <p className="mb-8 text-lg text-[#64748B]">
             No hidden fees. No per-patient charges. Just one plan for your whole
             clinic.
           </p>
 
           {/* Toggle */}
-          <div className="inline-flex items-center gap-3 bg-white border border-[#E2E8F0] rounded-full px-4 py-2 shadow-sm">
+          <div className="inline-flex items-center gap-3 rounded-full border border-[#E2E8F0] bg-white px-4 py-2 shadow-sm">
             <span
               className={`text-sm font-medium transition-colors ${!annual ? "text-[#7F1D1D]" : "text-[#64748B]"}`}
             >
@@ -592,27 +589,27 @@ function Pricing() {
             </span>
             <button
               onClick={() => setAnnual(!annual)}
-              className={`w-12 h-6 rounded-full transition-all duration-300 relative ${annual ? "bg-[#DC2626]" : "bg-[#E2E8F0]"}`}
+              className={`relative h-6 w-12 rounded-full transition-all duration-300 ${annual ? "bg-[#DC2626]" : "bg-[#E2E8F0]"}`}
               aria-label="Toggle annual billing"
             >
               <span
-                className={`absolute top-1 w-4 h-4 bg-white rounded-full shadow transition-all duration-300 ${annual ? "left-7" : "left-1"}`}
+                className={`absolute top-1 h-4 w-4 rounded-full bg-white shadow transition-all duration-300 ${annual ? "left-7" : "left-1"}`}
               />
             </button>
             <span
               className={`text-sm font-medium transition-colors ${annual ? "text-[#7F1D1D]" : "text-[#64748B]"}`}
             >
               Annual{" "}
-              <span className="text-[#DC2626] font-bold text-xs">Save 20%</span>
+              <span className="text-xs font-bold text-[#DC2626]">Save 20%</span>
             </span>
           </div>
         </div>
 
-        <div className="grid md:grid-cols-3 gap-6 fade-section opacity-0 translate-y-4 transition-all duration-700">
+        <div className="fade-section grid translate-y-4 gap-6 opacity-0 transition-all duration-700 md:grid-cols-3">
           {PLANS.map((plan) => (
             <Card
               key={plan.name}
-              className={`relative border-2 transition-all duration-200 hover:shadow-xl hover:-translate-y-1 ${
+              className={`relative border-2 transition-all duration-200 hover:-translate-y-1 hover:shadow-xl ${
                 plan.popular
                   ? "border-[#DC2626] shadow-lg shadow-red-100"
                   : "border-[#E2E8F0]"
@@ -620,25 +617,25 @@ function Pricing() {
             >
               {plan.popular && (
                 <div className="absolute -top-3.5 left-1/2 -translate-x-1/2">
-                  <Badge className="bg-[#DC2626] text-white font-bold px-4 py-1 text-xs">
+                  <Badge className="bg-[#DC2626] px-4 py-1 text-xs font-bold text-white">
                     Most Popular
                   </Badge>
                 </div>
               )}
               <CardHeader className="pb-4">
                 <CardTitle
-                  className={`text-xl font-bold font-['Plus_Jakarta_Sans'] ${plan.popular ? "text-[#DC2626]" : "text-[#7F1D1D]"}`}
+                  className={`font-['Plus_Jakarta_Sans'] text-xl font-bold ${plan.popular ? "text-[#DC2626]" : "text-[#7F1D1D]"}`}
                 >
                   {plan.name}
                 </CardTitle>
-                <p className="text-[#64748B] text-sm">{plan.desc}</p>
+                <p className="text-sm text-[#64748B]">{plan.desc}</p>
                 <div className="mt-4">
                   {plan.monthly ? (
                     <>
                       <span className="text-5xl font-extrabold text-[#7F1D1D]">
                         ${annual ? plan.annual : plan.monthly}
                       </span>
-                      <span className="text-[#64748B] text-sm">/mo</span>
+                      <span className="text-sm text-[#64748B]">/mo</span>
                     </>
                   ) : (
                     <span className="text-4xl font-extrabold text-[#7F1D1D]">
@@ -650,18 +647,18 @@ function Pricing() {
               <CardContent className="space-y-3">
                 {plan.features.map((f) => (
                   <div key={f} className="flex items-center gap-3">
-                    <div className="w-5 h-5 rounded-full bg-red-50 flex items-center justify-center shrink-0">
-                      <Check className="w-3 h-3 text-[#DC2626]" />
+                    <div className="flex h-5 w-5 shrink-0 items-center justify-center rounded-full bg-red-50">
+                      <Check className="h-3 w-3 text-[#DC2626]" />
                     </div>
-                    <span className="text-[#7F1D1D] text-sm">{f}</span>
+                    <span className="text-sm text-[#7F1D1D]">{f}</span>
                   </div>
                 ))}
                 <div className="pt-4">
                   <Button
                     className={`w-full font-bold ${
                       plan.popular
-                        ? "bg-[#DC2626] hover:bg-red-700 text-white"
-                        : "border-2 border-[#7F1D1D] text-[#7F1D1D] bg-white hover:bg-[#7F1D1D] hover:text-white"
+                        ? "bg-[#DC2626] text-white hover:bg-red-700"
+                        : "border-2 border-[#7F1D1D] bg-white text-[#7F1D1D] hover:bg-[#7F1D1D] hover:text-white"
                     }`}
                     variant={plan.popular ? "default" : "outline"}
                   >
@@ -674,53 +671,53 @@ function Pricing() {
         </div>
       </div>
     </section>
-  );
+  )
 }
 
 function Testimonials() {
   return (
-    <section className="py-24 bg-white">
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        <div className="text-center mb-16 fade-section opacity-0 translate-y-4 transition-all duration-700">
-          <Badge className="mb-4 bg-red-50 text-[#DC2626] border border-red-200 font-semibold px-3 py-1 text-xs uppercase tracking-wide">
+    <section className="bg-white py-24">
+      <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
+        <div className="fade-section mb-16 translate-y-4 text-center opacity-0 transition-all duration-700">
+          <Badge className="mb-4 border border-red-200 bg-red-50 px-3 py-1 text-xs font-semibold tracking-wide text-[#DC2626] uppercase">
             Testimonials
           </Badge>
-          <h2 className="text-4xl font-extrabold text-[#7F1D1D] font-['Plus_Jakarta_Sans'] mb-4">
+          <h2 className="mb-4 font-['Plus_Jakarta_Sans'] text-4xl font-extrabold text-[#7F1D1D]">
             Trusted by Clinic Administrators
           </h2>
-          <p className="text-[#64748B] text-lg">
+          <p className="text-lg text-[#64748B]">
             Real feedback from real clinics across the country.
           </p>
         </div>
-        <div className="grid md:grid-cols-3 gap-6 fade-section opacity-0 translate-y-4 transition-all duration-700">
+        <div className="fade-section grid translate-y-4 gap-6 opacity-0 transition-all duration-700 md:grid-cols-3">
           {TESTIMONIALS.map(({ avatar, name, role, quote }) => (
             <Card
               key={name}
-              className="border border-[#E2E8F0] hover:shadow-lg hover:-translate-y-1 transition-all duration-200 p-6"
+              className="border border-[#E2E8F0] p-6 transition-all duration-200 hover:-translate-y-1 hover:shadow-lg"
             >
               <CardContent className="p-0">
-                <div className="flex gap-1 mb-4">
+                <div className="mb-4 flex gap-1">
                   {Array(5)
                     .fill(0)
                     .map((_, i) => (
                       <Star
                         key={i}
-                        className="w-4 h-4 text-[#DC2626] fill-[#DC2626]"
+                        className="h-4 w-4 fill-[#DC2626] text-[#DC2626]"
                       />
                     ))}
                 </div>
-                <p className="text-[#7F1D1D] text-sm leading-relaxed mb-6 italic">
+                <p className="mb-6 text-sm leading-relaxed text-[#7F1D1D] italic">
                   "{quote}"
                 </p>
                 <div className="flex items-center gap-3">
                   <img
                     src={avatar}
                     alt={name}
-                    className="w-12 h-12 rounded-full object-cover border-2 border-[#E2E8F0]"
+                    className="h-12 w-12 rounded-full border-2 border-[#E2E8F0] object-cover"
                   />
                   <div>
-                    <p className="text-[#7F1D1D] font-bold text-sm">{name}</p>
-                    <p className="text-[#64748B] text-xs">{role}</p>
+                    <p className="text-sm font-bold text-[#7F1D1D]">{name}</p>
+                    <p className="text-xs text-[#64748B]">{role}</p>
                   </div>
                 </div>
               </CardContent>
@@ -729,36 +726,36 @@ function Testimonials() {
         </div>
       </div>
     </section>
-  );
+  )
 }
 
 function FAQ() {
   return (
-    <section id="faq" className="py-24 bg-[#F8FAFC]">
-      <div className="max-w-3xl mx-auto px-4 sm:px-6 lg:px-8">
-        <div className="text-center mb-12 fade-section opacity-0 translate-y-4 transition-all duration-700">
-          <Badge className="mb-4 bg-red-50 text-[#DC2626] border border-red-200 font-semibold px-3 py-1 text-xs uppercase tracking-wide">
+    <section id="faq" className="bg-[#F8FAFC] py-24">
+      <div className="mx-auto max-w-3xl px-4 sm:px-6 lg:px-8">
+        <div className="fade-section mb-12 translate-y-4 text-center opacity-0 transition-all duration-700">
+          <Badge className="mb-4 border border-red-200 bg-red-50 px-3 py-1 text-xs font-semibold tracking-wide text-[#DC2626] uppercase">
             FAQ
           </Badge>
-          <h2 className="text-4xl font-extrabold text-[#7F1D1D] font-['Plus_Jakarta_Sans'] mb-4">
+          <h2 className="mb-4 font-['Plus_Jakarta_Sans'] text-4xl font-extrabold text-[#7F1D1D]">
             Frequently Asked Questions
           </h2>
-          <p className="text-[#64748B] text-lg">
+          <p className="text-lg text-[#64748B]">
             Everything you need to know before getting started.
           </p>
         </div>
-        <div className="fade-section opacity-0 translate-y-4 transition-all duration-700">
+        <div className="fade-section translate-y-4 opacity-0 transition-all duration-700">
           <Accordion type="single" collapsible className="space-y-3">
             {FAQS.map(({ q, a }, i) => (
               <AccordionItem
                 key={i}
                 value={`item-${i}`}
-                className="bg-white border border-[#E2E8F0] rounded-xl px-6 shadow-sm"
+                className="rounded-xl border border-[#E2E8F0] bg-white px-6 shadow-sm"
               >
-                <AccordionTrigger className="text-[#7F1D1D] font-semibold text-sm py-5 hover:no-underline text-left">
+                <AccordionTrigger className="py-5 text-left text-sm font-semibold text-[#7F1D1D] hover:no-underline">
                   {q}
                 </AccordionTrigger>
-                <AccordionContent className="text-[#64748B] text-sm leading-relaxed pb-5">
+                <AccordionContent className="pb-5 text-sm leading-relaxed text-[#64748B]">
                   {a}
                 </AccordionContent>
               </AccordionItem>
@@ -767,34 +764,144 @@ function FAQ() {
         </div>
       </div>
     </section>
-  );
+  )
 }
 
 function CTABanner() {
+  const [loading, setLoading] = useState(false);
+  const [submitted, setSubmitted] = useState(false);
+
+  const handleSubmit = async (e:any) => {
+    e.preventDefault();
+    setLoading(true);
+    await new Promise((r) => setTimeout(r, 1500));
+    setLoading(false);
+    setSubmitted(true);
+  };
+
   return (
-    <section id="contact" className="py-24 bg-[#DC2626]">
-      <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 text-center fade-section opacity-0 translate-y-4 transition-all duration-700">
-        <h2 className="text-4xl md:text-5xl font-extrabold text-white font-['Plus_Jakarta_Sans'] mb-4">
-          Ready to Modernize Your Clinic?
-        </h2>
-        <p className="text-red-200 text-lg mb-10">
-          Join hundreds of clinics already using MediCare to deliver better
-          patient care, every single day.
-        </p>
-        <div className="flex flex-wrap justify-center gap-4">
-          <Button
-            size="lg"
-            className="bg-white text-[#7F1D1D] hover:bg-red-50 font-bold px-10 py-3 text-base shadow-lg"
-          >
-            Get Started
-          </Button>
-          <Button
-            size="lg"
-            variant="outline"
-            className="border-2 border-white text-white bg-transparent hover:bg-white hover:text-[#DC2626] font-bold px-10 py-3 text-base"
-          >
-            Contact Sales
-          </Button>
+    <section id="contact" className="bg-[#DC2626] py-24">
+      <div className="fade-section mx-auto max w-5xl translate-y-4 px-4 opacity-0 transition-all duration-700 sm:px-6 lg:px-8">
+        {/* Header */}
+        <div className="mb-10 text-center">
+          <h2 className="mb-4 font-['Plus_Jakarta_Sans'] text-4xl font-extrabold text-white md:text-5xl">
+            Ready to Modernize Your Clinic?
+          </h2>
+          <p className="text-lg text-red-200">
+            Join hundreds of clinics already using MediCare. Fill out the form
+            and our team will reach out shortly.
+          </p>
+        </div>
+
+        {/* Card */}
+        <div className="mx-auto max-w-2xl">
+          <Card className="border-0 bg-white p-2 shadow-2xl shadow-red-900/30">
+            <CardHeader>
+              <CardTitle className="font-['Plus_Jakarta_Sans'] text-2xl text-[#7F1D1D]">
+                Get in Touch
+              </CardTitle>
+              <CardDescription className="text-slate-500">
+                Tell us about your clinic and we'll find the right plan for you.
+              </CardDescription>
+            </CardHeader>
+            <CardContent>
+              {submitted ? (
+                <div className="flex flex-col items-center justify-center py-10 text-center">
+                  <div className="mb-4 flex h-14 w-14 items-center justify-center rounded-full bg-red-100">
+                    <svg className="h-7 w-7 text-[#DC2626]" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2.5}>
+                      <path strokeLinecap="round" strokeLinejoin="round" d="M5 13l4 4L19 7" />
+                    </svg>
+                  </div>
+                  <h3 className="mb-2 text-xl font-bold text-[#7F1D1D]">Message Sent!</h3>
+                  <p className="text-slate-500">Thanks for reaching out. We'll be in touch within 1 business day.</p>
+                </div>
+              ) : (
+                <form className="space-y-5 text-slate-800" onSubmit={handleSubmit}>
+                  <div className="grid grid-cols-1 gap-5 md:grid-cols-2">
+                    <div className="space-y-2">
+                      <Label htmlFor="name" className="font-medium text-slate-700">
+                        Full Name
+                      </Label>
+                      <Input
+                        id="name"
+                        name="name"
+                        placeholder="Dr. Sarah Mitchell"
+                        className="h-11 border-slate-200 focus-visible:ring-[#DC2626]"
+                        required
+                      />
+                    </div>
+                    <div className="space-y-2">
+                      <Label htmlFor="clinic" className="font-medium text-slate-700">
+                        Clinic Name
+                      </Label>
+                      <Input
+                        id="clinic"
+                        name="clinic"
+                        placeholder="City Health Clinic"
+                        className="h-11 border-slate-200 focus-visible:ring-[#DC2626]"
+                        required
+                      />
+                    </div>
+                  </div>
+                  <div className="grid grid-cols-1 gap-5 md:grid-cols-2">
+                    <div className="space-y-2">
+                      <Label htmlFor="email" className="font-medium text-slate-700">
+                        Work Email
+                      </Label>
+                      <Input
+                        id="email"
+                        name="email"
+                        type="email"
+                        placeholder="sarah@cityclinic.com"
+                        className="h-11 border-slate-200 focus-visible:ring-[#DC2626]"
+                        required
+                      />
+                    </div>
+                    <div className="space-y-2">
+                      <Label htmlFor="phone" className="font-medium text-slate-700">
+                        Phone Number
+                      </Label>
+                      <Input
+                        id="phone"
+                        name="phone"
+                        type="tel"
+                        placeholder="+1 (555) 000-0000"
+                        className="h-11 border-slate-200 focus-visible:ring-[#DC2626]"
+                      />
+                    </div>
+                  </div>
+                  <div className="space-y-2">
+                    <Label htmlFor="message" className="font-medium text-slate-700">
+                      How can we help? (Optional)
+                    </Label>
+                    <Textarea
+                      id="message"
+                      name="message"
+                      placeholder="Tell us about your clinic size, current systems, or any specific needs..."
+                      className="min-h-25 resize-y border-slate-200 focus-visible:ring-[#DC2626]"
+                    />
+                  </div>
+                  <div className="flex flex-col gap-3 pt-1 sm:flex-row">
+                    <Button
+                      type="submit"
+                      disabled={loading}
+                      className="h-12 w-full cursor-pointer rounded-lg bg-[#DC2626] text-base font-semibold text-white hover:bg-[#b91c1c]"
+                    >
+                      {loading ? "Sending..." : "Get Started Today"}
+                      {!loading && <ArrowRight className="ml-2 h-4 w-4" />}
+                    </Button>
+                    <Button
+                      type="button"
+                      variant="outline"
+                      className="h-12 w-full border-2 border-[#DC2626] bg-transparent text-base font-semibold text-[#DC2626] hover:bg-red-50 sm:w-auto sm:px-8"
+                    >
+                      Contact Sales
+                    </Button>
+                  </div>
+                </form>
+              )}
+            </CardContent>
+          </Card>
         </div>
       </div>
     </section>
@@ -804,19 +911,19 @@ function CTABanner() {
 function Footer() {
   return (
     <footer className="bg-[#7F1D1D] pt-16 pb-8">
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        <div className="grid grid-cols-2 md:grid-cols-5 gap-10 mb-12">
+      <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
+        <div className="mb-12 grid grid-cols-2 gap-10 md:grid-cols-5">
           {/* Brand */}
           <div className="col-span-2 md:col-span-1">
-            <a href="#" className="flex items-center gap-2 mb-4">
-              <div className="w-8 h-8 bg-[#DC2626] rounded-lg flex items-center justify-center">
-                <HeartPulse className="w-5 h-5 text-white" />
+            <a href="#" className="mb-4 flex items-center gap-2">
+              <div className="flex h-8 w-8 items-center justify-center rounded-lg bg-[#DC2626]">
+                <HeartPulse className="h-5 w-5 text-white" />
               </div>
-              <span className="text-white font-bold text-xl font-['Plus_Jakarta_Sans']">
+              <span className="font-['Plus_Jakarta_Sans'] text-xl font-bold text-white">
                 MediCare
               </span>
             </a>
-            <p className="text-[#64748B] text-sm leading-relaxed">
+            <p className="text-sm leading-relaxed text-[#64748B]">
               The modern SaaS platform for clinic and lab management.
             </p>
           </div>
@@ -824,13 +931,13 @@ function Footer() {
           {/* Link columns */}
           {Object.entries(FOOTER_LINKS).map(([group, links]) => (
             <div key={group}>
-              <h4 className="text-white font-semibold text-sm mb-4">{group}</h4>
+              <h4 className="mb-4 text-sm font-semibold text-white">{group}</h4>
               <ul className="space-y-2">
                 {links.map((l) => (
                   <li key={l}>
                     <a
                       href="#"
-                      className="text-[#64748B] text-sm hover:text-white transition-colors"
+                      className="text-sm text-[#64748B] transition-colors hover:text-white"
                     >
                       {l}
                     </a>
@@ -841,10 +948,10 @@ function Footer() {
           ))}
         </div>
 
-        <Separator className="bg-white/10 mb-8" />
+        <Separator className="mb-8 bg-white/10" />
 
-        <div className="flex flex-col sm:flex-row justify-between items-center gap-4">
-          <p className="text-[#64748B] text-sm">
+        <div className="flex flex-col items-center justify-between gap-4 sm:flex-row">
+          <p className="text-sm text-[#64748B]">
             © {new Date().getFullYear()} MediCare. All rights reserved.
           </p>
           <div className="flex items-center gap-4">
@@ -853,16 +960,16 @@ function Footer() {
                 key={i}
                 href="#"
                 aria-label={`Social link ${i}`}
-                className="w-8 h-8 bg-white/10 rounded-lg flex items-center justify-center hover:bg-red-700 transition-colors"
+                className="flex h-8 w-8 items-center justify-center rounded-lg bg-white/10 transition-colors hover:bg-red-700"
               >
-                <Icon className="w-4 h-4 text-white" />
+                <Icon className="h-4 w-4 text-white" />
               </a>
             ))}
           </div>
         </div>
       </div>
     </footer>
-  );
+  )
 }
 
 // ─── MAIN COMPONENT ───────────────────────────────────────────────────────────
@@ -870,36 +977,36 @@ function Footer() {
 export function App() {
   useEffect(() => {
     // Inject fonts
-    const link = document.createElement("link");
-    link.rel = "stylesheet";
+    const link = document.createElement("link")
+    link.rel = "stylesheet"
     link.href =
-      "https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;600;700;800&family=Inter:wght@400;500;600&display=swap";
-    document.head.appendChild(link);
+      "https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;600;700;800&family=Inter:wght@400;500;600&display=swap"
+    document.head.appendChild(link)
 
     // Smooth scroll
-    const style = document.createElement("style");
-    style.textContent = `html { scroll-behavior: smooth; } body { font-family: 'Inter', sans-serif; }`;
-    document.head.appendChild(style);
+    const style = document.createElement("style")
+    style.textContent = `html { scroll-behavior: smooth; } body { font-family: 'Inter', sans-serif; }`
+    document.head.appendChild(style)
 
     // IntersectionObserver for fade-in
     const observer = new IntersectionObserver(
       (entries) => {
         entries.forEach((entry) => {
           if (entry.isIntersecting) {
-            entry.target.classList.remove("opacity-0", "translate-y-4");
-            entry.target.classList.add("opacity-100", "translate-y-0");
+            entry.target.classList.remove("opacity-0", "translate-y-4")
+            entry.target.classList.add("opacity-100", "translate-y-0")
           }
-        });
+        })
       },
       { threshold: 0.1 }
-    );
+    )
 
     document.querySelectorAll(".fade-section").forEach((el) => {
-      observer.observe(el);
-    });
+      observer.observe(el)
+    })
 
-    return () => observer.disconnect();
-  }, []);
+    return () => observer.disconnect()
+  }, [])
 
   return (
     <div className="bg-[#F8FAFC] text-[#7F1D1D]">
@@ -917,7 +1024,7 @@ export function App() {
       </main>
       <Footer />
     </div>
-  );
+  )
 }
 
-export default App;
+export default App
