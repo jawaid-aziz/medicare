@@ -769,7 +769,7 @@ function FAQ() {
   )
 }
 
-function CTABanner() {
+function Contact() {
   const [loading, setLoading] = useState(false);
 
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
@@ -815,11 +815,7 @@ function CTABanner() {
     }
 
   } catch (err) {
-
-    toast.error(`Something went wrong.`, {
-      description: "Please try again."
-    })
-
+    console.log(err)
   } finally {
     setLoading(false)
   }
@@ -1048,7 +1044,7 @@ export function App() {
         <Pricing />
         <Testimonials />
         <FAQ />
-        <CTABanner />
+        <Contact />
       </main>
       <Footer />
     </div>
