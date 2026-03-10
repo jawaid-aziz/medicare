@@ -34,6 +34,8 @@ import {
   MapPin,
   ArrowRight
 } from "lucide-react"
+import { Toaster } from "sonner"
+import { toast } from "sonner"
 
 // ─── DATA ────────────────────────────────────────────────────────────────────
 
@@ -769,15 +771,59 @@ function FAQ() {
 
 function CTABanner() {
   const [loading, setLoading] = useState(false);
-  const [submitted, setSubmitted] = useState(false);
 
-  const handleSubmit = async (e:any) => {
-    e.preventDefault();
-    setLoading(true);
-    await new Promise((r) => setTimeout(r, 1500));
-    setLoading(false);
-    setSubmitted(true);
-  };
+  const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
+  e.preventDefault()
+
+  setLoading(true)
+
+  try {
+    const formData = new FormData(e.currentTarget)
+
+    const data = {
+      name: formData.get("name"),
+      clinic: formData.get("clinic"),
+      email: formData.get("email"),
+      message: formData.get("message"),
+      phone: formData.get("phone")
+    }
+
+    const res = await fetch("/api/send-email", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json"
+      },
+      body: JSON.stringify(data)
+    })
+
+    if (!res.ok) {
+      throw new Error("Server error")
+    }
+
+    const result = await res.json()
+
+    if (result.success) {
+
+      toast.success("Request sent successfully", {
+        description: "We'll contact you shortly."
+      })
+
+      e.currentTarget.reset()
+
+    } else {
+      throw new Error("Email failed")
+    }
+
+  } catch (err) {
+
+    toast.error(`Something went wrong.`, {
+      description: "Please try again."
+    })
+
+  } finally {
+    setLoading(false)
+  }
+}
 
   return (
     <section id="contact" className="bg-[#DC2626] py-24">
@@ -805,17 +851,6 @@ function CTABanner() {
               </CardDescription>
             </CardHeader>
             <CardContent>
-              {submitted ? (
-                <div className="flex flex-col items-center justify-center py-10 text-center">
-                  <div className="mb-4 flex h-14 w-14 items-center justify-center rounded-full bg-red-100">
-                    <svg className="h-7 w-7 text-[#DC2626]" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2.5}>
-                      <path strokeLinecap="round" strokeLinejoin="round" d="M5 13l4 4L19 7" />
-                    </svg>
-                  </div>
-                  <h3 className="mb-2 text-xl font-bold text-[#7F1D1D]">Message Sent!</h3>
-                  <p className="text-slate-500">Thanks for reaching out. We'll be in touch within 1 business day.</p>
-                </div>
-              ) : (
                 <form className="space-y-5 text-slate-800" onSubmit={handleSubmit}>
                   <div className="grid grid-cols-1 gap-5 md:grid-cols-2">
                     <div className="space-y-2">
@@ -872,7 +907,7 @@ function CTABanner() {
                   </div>
                   <div className="space-y-2">
                     <Label htmlFor="message" className="font-medium text-slate-700">
-                      How can we help? (Optional)
+                      How can we help?
                     </Label>
                     <Textarea
                       id="message"
@@ -890,16 +925,8 @@ function CTABanner() {
                       {loading ? "Sending..." : "Get Started Today"}
                       {!loading && <ArrowRight className="ml-2 h-4 w-4" />}
                     </Button>
-                    <Button
-                      type="button"
-                      variant="outline"
-                      className="h-12 w-full border-2 border-[#DC2626] bg-transparent text-base font-semibold text-[#DC2626] hover:bg-red-50 sm:w-auto sm:px-8"
-                    >
-                      Contact Sales
-                    </Button>
                   </div>
                 </form>
-              )}
             </CardContent>
           </Card>
         </div>
@@ -1010,6 +1037,7 @@ export function App() {
 
   return (
     <div className="bg-[#F8FAFC] text-[#7F1D1D]">
+      <Toaster position="bottom-left" richColors />
       <Navbar />
       <main>
         <Hero />
