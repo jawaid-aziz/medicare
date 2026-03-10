@@ -25,9 +25,6 @@ import {
   Search,
   QrCode,
   ChevronRight,
-  Twitter,
-  Linkedin,
-  Facebook,
   ShieldCheck,
   Building2,
   TrendingUp,
@@ -48,10 +45,10 @@ const NAV_LINKS = [
 ]
 
 const STATS = [
-  { value: "500+", label: "Clinics Onboarded", icon: Building2 },
-  { value: "1M+", label: "Appointments Managed", icon: CalendarCheck },
+  { value: "50+", label: "Clinics Onboarded", icon: Building2 },
+  { value: "100K+", label: "Appointments Managed", icon: CalendarCheck },
   { value: "99.9%", label: "Uptime Guaranteed", icon: TrendingUp },
-  { value: "50+", label: "Cities Served", icon: MapPin },
+  { value: "15+", label: "Cities Served", icon: MapPin },
 ]
 
 const FEATURES = [
@@ -160,22 +157,22 @@ const PLANS = [
 const TESTIMONIALS = [
   {
     avatar: "https://i.pravatar.cc/80?img=1",
-    name: "Dr. Aisha Khan",
+    name: "Dr. Ralph Feiness",
     role: "Head of Internal Medicine, Aga Khan Clinic",
     quote:
       "MediCare transformed how our department operates. The QR-enabled lab reports mean patients call us less — they simply scan and view their results. Brilliant.",
   },
   {
     avatar: "https://i.pravatar.cc/80?img=5",
-    name: "Mr. Tariq Mehmood",
+    name: "Dr. Aisha Khan",
     role: "Clinic Administrator, City Health Center",
     quote:
       "Onboarding took under an hour. Our receptionists loved the appointment forms and the ability to update patient times on the fly without any restrictions.",
   },
   {
     avatar: "https://i.pravatar.cc/80?img=12",
-    name: "Dr. Sara Nawaz",
-    role: "Cardiologist, Shifa Medical Complex",
+    name: "Dr. Cooper Fens",
+    role: "Cardiologist, Stevens Medical Complex",
     quote:
       "Department-wise filtering is a game changer. I only see my patients, my lab orders. No noise. MediCare keeps me focused on what actually matters.",
   },
@@ -209,10 +206,8 @@ const FAQS = [
 ]
 
 const FOOTER_LINKS = {
-  Product: ["Features", "Pricing", "How It Works", "Changelog"],
-  Company: ["About", "Blog", "Careers", "Press"],
-  Support: ["FAQ", "Documentation", "Contact", "Status"],
-  Legal: ["Privacy Policy", "Terms of Service", "HIPAA Compliance"],
+  Product: ["Features", "Pricing", "How It Works", "FAQ"],
+  Company: ["Contact Us", "Product Stats", "Testimonials"],
 }
 
 // ─── SUB-COMPONENTS ───────────────────────────────────────────────────────────
@@ -379,7 +374,7 @@ function Hero() {
 
 function StatsBar() {
   return (
-    <section className="bg-[#7F1D1D] py-12">
+    <section id="Product Stats" className="bg-[#7F1D1D] py-12">
       <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
         <div className="grid grid-cols-2 gap-8 lg:grid-cols-4">
           {STATS.map(({ value, label, icon: Icon }) => (
@@ -403,7 +398,7 @@ function StatsBar() {
 
 function Features() {
   return (
-    <section id="features" className="bg-white py-24">
+    <section id="Features" className="bg-white py-24">
       <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
         <div className="fade-section mb-16 translate-y-4 text-center opacity-0 transition-all duration-700">
           <Badge className="mb-4 border border-red-200 bg-red-50 px-3 py-1 text-xs font-semibold tracking-wide text-[#DC2626] uppercase">
@@ -421,7 +416,7 @@ function Features() {
           {FEATURES.map(({ icon: Icon, title, desc }) => (
             <Card
               key={title}
-              className="fade-section translate-y-4 border border-[#E2E8F0] opacity-0 transition-all duration-200 hover:-translate-y-1 hover:shadow-lg"
+              className="bg-white fade-section translate-y-4 border border-[#E2E8F0] opacity-0 transition-all duration-200 hover:-translate-y-1 hover:shadow-lg"
             >
               <CardHeader className="pb-3">
                 <div className="mb-4 flex h-12 w-12 items-center justify-center rounded-xl bg-red-50">
@@ -444,7 +439,7 @@ function Features() {
 
 function HowItWorks() {
   return (
-    <section id="how-it-works" className="bg-[#F8FAFC] py-24">
+    <section id="How It Works" className="bg-[#F8FAFC] py-24">
       <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
         <div className="fade-section mb-16 translate-y-4 text-center opacity-0 transition-all duration-700">
           <Badge className="mb-4 border border-red-200 bg-red-50 px-3 py-1 text-xs font-semibold tracking-wide text-[#DC2626] uppercase">
@@ -568,7 +563,7 @@ function Pricing() {
   const [annual, setAnnual] = useState(false)
 
   return (
-    <section id="pricing" className="bg-[#F8FAFC] py-24">
+    <section id="Pricing" className="bg-[#F8FAFC] py-24">
       <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
         <div className="fade-section mb-12 translate-y-4 text-center opacity-0 transition-all duration-700">
           <Badge className="mb-4 border border-red-200 bg-red-50 px-3 py-1 text-xs font-semibold tracking-wide text-[#DC2626] uppercase">
@@ -611,19 +606,12 @@ function Pricing() {
           {PLANS.map((plan) => (
             <Card
               key={plan.name}
-              className={`relative border-2 transition-all duration-200 hover:-translate-y-1 hover:shadow-xl ${
+              className={`bg-white relative border-2 transition-all duration-200 hover:-translate-y-1 hover:shadow-xl ${
                 plan.popular
                   ? "border-[#DC2626] shadow-lg shadow-red-100"
                   : "border-[#E2E8F0]"
               }`}
             >
-              {plan.popular && (
-                <div className="absolute -top-3.5 left-1/2 -translate-x-1/2">
-                  <Badge className="bg-[#DC2626] px-4 py-1 text-xs font-bold text-white">
-                    Most Popular
-                  </Badge>
-                </div>
-              )}
               <CardHeader className="pb-4">
                 <CardTitle
                   className={`font-['Plus_Jakarta_Sans'] text-xl font-bold ${plan.popular ? "text-[#DC2626]" : "text-[#7F1D1D]"}`}
@@ -662,7 +650,7 @@ function Pricing() {
                         ? "bg-[#DC2626] text-white hover:bg-red-700"
                         : "border-2 border-[#7F1D1D] bg-white text-[#7F1D1D] hover:bg-[#7F1D1D] hover:text-white"
                     }`}
-                    variant={plan.popular ? "default" : "outline"}
+                    variant={plan.popular ? "default" : "default"}
                   >
                     {plan.cta}
                   </Button>
@@ -678,7 +666,7 @@ function Pricing() {
 
 function Testimonials() {
   return (
-    <section className="bg-white py-24">
+    <section id="Testimonials" className="bg-white py-24">
       <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
         <div className="fade-section mb-16 translate-y-4 text-center opacity-0 transition-all duration-700">
           <Badge className="mb-4 border border-red-200 bg-red-50 px-3 py-1 text-xs font-semibold tracking-wide text-[#DC2626] uppercase">
@@ -695,7 +683,7 @@ function Testimonials() {
           {TESTIMONIALS.map(({ avatar, name, role, quote }) => (
             <Card
               key={name}
-              className="border border-[#E2E8F0] p-6 transition-all duration-200 hover:-translate-y-1 hover:shadow-lg"
+              className="bg-white border border-[#E2E8F0] p-6 transition-all duration-200 hover:-translate-y-1 hover:shadow-lg"
             >
               <CardContent className="p-0">
                 <div className="mb-4 flex gap-1">
@@ -733,7 +721,7 @@ function Testimonials() {
 
 function FAQ() {
   return (
-    <section id="faq" className="bg-[#F8FAFC] py-24">
+    <section id="FAQ" className="bg-[#F8FAFC] py-24">
       <div className="mx-auto max-w-3xl px-4 sm:px-6 lg:px-8">
         <div className="fade-section mb-12 translate-y-4 text-center opacity-0 transition-all duration-700">
           <Badge className="mb-4 border border-red-200 bg-red-50 px-3 py-1 text-xs font-semibold tracking-wide text-[#DC2626] uppercase">
@@ -823,7 +811,7 @@ function Contact() {
 }
 
   return (
-    <section id="contact" className="bg-[#DC2626] py-24">
+    <section id="Contact Us" className="bg-[#DC2626] py-24">
       <div className="fade-section mx-auto max w-5xl translate-y-4 px-4 opacity-0 transition-all duration-700 sm:px-6 lg:px-8">
         {/* Header */}
         <div className="mb-10 text-center">
@@ -934,16 +922,16 @@ function Contact() {
 
 function Footer() {
   return (
-    <footer className="bg-[#7F1D1D] pt-16 pb-8">
-      <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
-        <div className="mb-12 grid grid-cols-2 gap-10 md:grid-cols-5">
+    <footer className="pt-16 pb-8">
+      <div className="container mx-auto max-w-7xl px-4 md:px-8">
+        <div className="mb-12 grid grid-cols-1 gap-12 md:grid-cols-4 lg:gap-8">
           {/* Brand */}
-          <div className="col-span-2 md:col-span-1">
-            <a href="#" className="mb-4 flex items-center gap-2">
+          <div className="col-span-1 md:col-span-2">
+            <a href="#" className="mb-6 flex items-center gap-2">
               <div className="flex h-8 w-8 items-center justify-center rounded-lg bg-[#DC2626]">
                 <HeartPulse className="h-5 w-5 text-white" />
               </div>
-              <span className="font-['Plus_Jakarta_Sans'] text-xl font-bold text-white">
+              <span className="font-['Plus_Jakarta_Sans'] text-2xl font-bold text-[#7F1D1D]">
                 MediCare
               </span>
             </a>
@@ -955,13 +943,13 @@ function Footer() {
           {/* Link columns */}
           {Object.entries(FOOTER_LINKS).map(([group, links]) => (
             <div key={group}>
-              <h4 className="mb-4 text-sm font-semibold text-white">{group}</h4>
+              <h4 className="mb-6 text-sm font-semibold text-[#7F1D1D]">{group}</h4>
               <ul className="space-y-2">
                 {links.map((l) => (
                   <li key={l}>
                     <a
-                      href="#"
-                      className="text-sm text-[#64748B] transition-colors hover:text-white"
+                      href={`#${l}`}
+                      className="text-sm text-[#64748B] transition-colors hover:text-[#7F1D1D]"
                     >
                       {l}
                     </a>
@@ -978,18 +966,6 @@ function Footer() {
           <p className="text-sm text-[#64748B]">
             © {new Date().getFullYear()} MediCare. All rights reserved.
           </p>
-          <div className="flex items-center gap-4">
-            {[Twitter, Linkedin, Facebook].map((Icon, i) => (
-              <a
-                key={i}
-                href="#"
-                aria-label={`Social link ${i}`}
-                className="flex h-8 w-8 items-center justify-center rounded-lg bg-white/10 transition-colors hover:bg-red-700"
-              >
-                <Icon className="h-4 w-4 text-white" />
-              </a>
-            ))}
-          </div>
         </div>
       </div>
     </footer>
