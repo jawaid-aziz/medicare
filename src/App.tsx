@@ -1,6 +1,12 @@
 import { useState, useEffect, useRef } from "react"
 import { Button } from "@/components/ui/button"
-import { Card, CardContent, CardHeader, CardTitle, CardDescription } from "@/components/ui/card"
+import {
+  Card,
+  CardContent,
+  CardHeader,
+  CardTitle,
+  CardDescription,
+} from "@/components/ui/card"
 import { Badge } from "@/components/ui/badge"
 import { Textarea } from "@/components/ui/textarea"
 import { Input } from "@/components/ui/input"
@@ -29,7 +35,7 @@ import {
   Building2,
   TrendingUp,
   MapPin,
-  ArrowRight
+  ArrowRight,
 } from "lucide-react"
 import { Toaster } from "sonner"
 import { toast } from "sonner"
@@ -37,11 +43,11 @@ import { toast } from "sonner"
 // ─── DATA ────────────────────────────────────────────────────────────────────
 
 const NAV_LINKS = [
-  { label: "Features", href: "#features" },
-  { label: "How It Works", href: "#how-it-works" },
-  { label: "Pricing", href: "#pricing" },
-  { label: "FAQ", href: "#faq" },
-  { label: "Contact", href: "#contact" },
+  { label: "Features", href: "#Features" },
+  { label: "How It Works", href: "#How It Works" },
+  { label: "Pricing", href: "#Pricing" },
+  { label: "FAQ", href: "#FAQ" },
+  { label: "Contact", href: "#Contact Us" },
 ]
 
 const STATS = [
@@ -256,9 +262,11 @@ function Navbar() {
         </div>
 
         <div className="hidden items-center md:flex">
-          <Button className="cursor-pointer bg-[#DC2626] px-5 text-sm font-semibold text-white hover:bg-red-700">
-            Get Started
-          </Button>
+          <a href="#Contact Us">
+            <Button className="cursor-pointer bg-[#DC2626] px-5 text-sm font-semibold text-white hover:bg-red-700">
+              Get Started
+            </Button>
+          </a>
         </div>
 
         {/* Mobile menu */}
@@ -416,7 +424,7 @@ function Features() {
           {FEATURES.map(({ icon: Icon, title, desc }) => (
             <Card
               key={title}
-              className="bg-white fade-section translate-y-4 border border-[#E2E8F0] opacity-0 transition-all duration-200 hover:-translate-y-1 hover:shadow-lg"
+              className="fade-section translate-y-4 border border-[#E2E8F0] bg-white opacity-0 transition-all duration-200 hover:-translate-y-1 hover:shadow-lg"
             >
               <CardHeader className="pb-3">
                 <div className="mb-4 flex h-12 w-12 items-center justify-center rounded-xl bg-red-50">
@@ -606,7 +614,7 @@ function Pricing() {
           {PLANS.map((plan) => (
             <Card
               key={plan.name}
-              className={`bg-white relative border-2 transition-all duration-200 hover:-translate-y-1 hover:shadow-xl ${
+              className={`relative border-2 bg-white transition-all duration-200 hover:-translate-y-1 hover:shadow-xl ${
                 plan.popular
                   ? "border-[#DC2626] shadow-lg shadow-red-100"
                   : "border-[#E2E8F0]"
@@ -683,7 +691,7 @@ function Testimonials() {
           {TESTIMONIALS.map(({ avatar, name, role, quote }) => (
             <Card
               key={name}
-              className="bg-white border border-[#E2E8F0] p-6 transition-all duration-200 hover:-translate-y-1 hover:shadow-lg"
+              className="border border-[#E2E8F0] bg-white p-6 transition-all duration-200 hover:-translate-y-1 hover:shadow-lg"
             >
               <CardContent className="p-0">
                 <div className="mb-4 flex gap-1">
@@ -758,61 +766,58 @@ function FAQ() {
 }
 
 function Contact() {
-  const [loading, setLoading] = useState(false);
+  const [loading, setLoading] = useState(false)
   const formRef = useRef<HTMLFormElement>(null)
 
   const handleSubmit = async (e: any) => {
-  e.preventDefault()
+    e.preventDefault()
 
-  setLoading(true)
+    setLoading(true)
 
-  try {
-    const formData = new FormData(e.currentTarget)
+    try {
+      const formData = new FormData(e.currentTarget)
 
-    const data = {
-      name: formData.get("name"),
-      clinic: formData.get("clinic"),
-      email: formData.get("email"),
-      message: formData.get("message"),
-      phone: formData.get("phone")
-    }
+      const data = {
+        name: formData.get("name"),
+        clinic: formData.get("clinic"),
+        email: formData.get("email"),
+        message: formData.get("message"),
+        phone: formData.get("phone"),
+      }
 
-    const res = await fetch("/api/send-email", {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json"
-      },
-      body: JSON.stringify(data)
-    })
-
-    if (!res.ok) {
-      throw new Error("Server error")
-    }
-
-    const result = await res.json()
-
-    if (result.success) {
-
-      toast.success("Request sent successfully", {
-        description: "We'll contact you shortly."
+      const res = await fetch("/api/send-email", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify(data),
       })
 
-      formRef.current?.reset()
+      if (!res.ok) {
+        throw new Error("Server error")
+      }
 
-    } else {
-      throw new Error("Email failed")
+      const result = await res.json()
+
+      if (result.success) {
+        toast.success("Request sent successfully", {
+          description: "We'll contact you shortly.",
+        })
+
+        formRef.current?.reset()
+      } else {
+        throw new Error("Email failed")
+      }
+    } catch (err) {
+      console.log(err)
+    } finally {
+      setLoading(false)
     }
-
-  } catch (err) {
-    console.log(err)
-  } finally {
-    setLoading(false)
   }
-}
 
   return (
     <section id="Contact Us" className="bg-[#DC2626] py-24">
-      <div className="fade-section mx-auto max w-5xl translate-y-4 px-4 opacity-0 transition-all duration-700 sm:px-6 lg:px-8">
+      <div className="fade-section max mx-auto w-5xl translate-y-4 px-4 opacity-0 transition-all duration-700 sm:px-6 lg:px-8">
         {/* Header */}
         <div className="mb-10 text-center">
           <h2 className="mb-4 font-['Plus_Jakarta_Sans'] text-4xl font-extrabold text-white md:text-5xl">
@@ -836,88 +841,107 @@ function Contact() {
               </CardDescription>
             </CardHeader>
             <CardContent>
-                <form className="space-y-5 text-slate-800" ref={formRef} onSubmit={handleSubmit}>
-                  <div className="grid grid-cols-1 gap-5 md:grid-cols-2">
-                    <div className="space-y-2">
-                      <Label htmlFor="name" className="font-medium text-slate-700">
-                        Full Name
-                      </Label>
-                      <Input
-                        id="name"
-                        name="name"
-                        placeholder="Dr. Sarah Mitchell"
-                        className="h-11 border-slate-200 focus-visible:ring-[#DC2626]"
-                        required
-                      />
-                    </div>
-                    <div className="space-y-2">
-                      <Label htmlFor="clinic" className="font-medium text-slate-700">
-                        Clinic Name
-                      </Label>
-                      <Input
-                        id="clinic"
-                        name="clinic"
-                        placeholder="City Health Clinic"
-                        className="h-11 border-slate-200 focus-visible:ring-[#DC2626]"
-                        required
-                      />
-                    </div>
-                  </div>
-                  <div className="grid grid-cols-1 gap-5 md:grid-cols-2">
-                    <div className="space-y-2">
-                      <Label htmlFor="email" className="font-medium text-slate-700">
-                        Work Email
-                      </Label>
-                      <Input
-                        id="email"
-                        name="email"
-                        type="email"
-                        placeholder="sarah@cityclinic.com"
-                        className="h-11 border-slate-200 focus-visible:ring-[#DC2626]"
-                        required
-                      />
-                    </div>
-                    <div className="space-y-2">
-                      <Label htmlFor="phone" className="font-medium text-slate-700">
-                        Phone Number
-                      </Label>
-                      <Input
-                        id="phone"
-                        name="phone"
-                        type="tel"
-                        placeholder="+1 (555) 000-0000"
-                        className="h-11 border-slate-200 focus-visible:ring-[#DC2626]"
-                      />
-                    </div>
-                  </div>
+              <form
+                className="space-y-5 text-slate-800"
+                ref={formRef}
+                onSubmit={handleSubmit}
+              >
+                <div className="grid grid-cols-1 gap-5 md:grid-cols-2">
                   <div className="space-y-2">
-                    <Label htmlFor="message" className="font-medium text-slate-700">
-                      How can we help?
+                    <Label
+                      htmlFor="name"
+                      className="font-medium text-slate-700"
+                    >
+                      Full Name
                     </Label>
-                    <Textarea
-                      id="message"
-                      name="message"
-                      placeholder="Tell us about your clinic size, current systems, or any specific needs..."
-                      className="min-h-25 resize-y border-slate-200 focus-visible:ring-[#DC2626]"
+                    <Input
+                      id="name"
+                      name="name"
+                      placeholder="Dr. Sarah Mitchell"
+                      className="h-11 border-slate-200 focus-visible:ring-[#DC2626]"
+                      required
                     />
                   </div>
-                  <div className="flex flex-col gap-3 pt-1 sm:flex-row">
-                    <Button
-                      type="submit"
-                      disabled={loading}
-                      className="h-12 w-full cursor-pointer rounded-lg bg-[#DC2626] text-base font-semibold text-white hover:bg-[#b91c1c]"
+                  <div className="space-y-2">
+                    <Label
+                      htmlFor="clinic"
+                      className="font-medium text-slate-700"
                     >
-                      {loading ? "Sending..." : "Get Started Today"}
-                      {!loading && <ArrowRight className="ml-2 h-4 w-4" />}
-                    </Button>
+                      Clinic Name
+                    </Label>
+                    <Input
+                      id="clinic"
+                      name="clinic"
+                      placeholder="City Health Clinic"
+                      className="h-11 border-slate-200 focus-visible:ring-[#DC2626]"
+                      required
+                    />
                   </div>
-                </form>
+                </div>
+                <div className="grid grid-cols-1 gap-5 md:grid-cols-2">
+                  <div className="space-y-2">
+                    <Label
+                      htmlFor="email"
+                      className="font-medium text-slate-700"
+                    >
+                      Work Email
+                    </Label>
+                    <Input
+                      id="email"
+                      name="email"
+                      type="email"
+                      placeholder="sarah@cityclinic.com"
+                      className="h-11 border-slate-200 focus-visible:ring-[#DC2626]"
+                      required
+                    />
+                  </div>
+                  <div className="space-y-2">
+                    <Label
+                      htmlFor="phone"
+                      className="font-medium text-slate-700"
+                    >
+                      Phone Number
+                    </Label>
+                    <Input
+                      id="phone"
+                      name="phone"
+                      type="tel"
+                      placeholder="+1 (555) 000-0000"
+                      className="h-11 border-slate-200 focus-visible:ring-[#DC2626]"
+                    />
+                  </div>
+                </div>
+                <div className="space-y-2">
+                  <Label
+                    htmlFor="message"
+                    className="font-medium text-slate-700"
+                  >
+                    How can we help?
+                  </Label>
+                  <Textarea
+                    id="message"
+                    name="message"
+                    placeholder="Tell us about your clinic size, current systems, or any specific needs..."
+                    className="min-h-25 resize-y border-slate-200 focus-visible:ring-[#DC2626]"
+                  />
+                </div>
+                <div className="flex flex-col gap-3 pt-1 sm:flex-row">
+                  <Button
+                    type="submit"
+                    disabled={loading}
+                    className="h-12 w-full cursor-pointer rounded-lg bg-[#DC2626] text-base font-semibold text-white hover:bg-[#b91c1c]"
+                  >
+                    {loading ? "Sending..." : "Get Started Today"}
+                    {!loading && <ArrowRight className="ml-2 h-4 w-4" />}
+                  </Button>
+                </div>
+              </form>
             </CardContent>
           </Card>
         </div>
       </div>
     </section>
-  );
+  )
 }
 
 function Footer() {
@@ -943,7 +967,9 @@ function Footer() {
           {/* Link columns */}
           {Object.entries(FOOTER_LINKS).map(([group, links]) => (
             <div key={group}>
-              <h4 className="mb-6 text-sm font-semibold text-[#7F1D1D]">{group}</h4>
+              <h4 className="mb-6 text-sm font-semibold text-[#7F1D1D]">
+                {group}
+              </h4>
               <ul className="space-y-2">
                 {links.map((l) => (
                   <li key={l}>
