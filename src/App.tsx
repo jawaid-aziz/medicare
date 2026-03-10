@@ -1,4 +1,4 @@
-import { useState, useEffect } from "react"
+import { useState, useEffect, useRef } from "react"
 import { Button } from "@/components/ui/button"
 import { Card, CardContent, CardHeader, CardTitle, CardDescription } from "@/components/ui/card"
 import { Badge } from "@/components/ui/badge"
@@ -771,6 +771,7 @@ function FAQ() {
 
 function Contact() {
   const [loading, setLoading] = useState(false);
+  const formRef = useRef<HTMLFormElement>(null)
 
   const handleSubmit = async (e: any) => {
   e.preventDefault()
@@ -808,7 +809,7 @@ function Contact() {
         description: "We'll contact you shortly."
       })
 
-      e.currentTarget.reset()
+      formRef.current?.reset()
 
     } else {
       throw new Error("Email failed")
@@ -847,7 +848,7 @@ function Contact() {
               </CardDescription>
             </CardHeader>
             <CardContent>
-                <form className="space-y-5 text-slate-800" onSubmit={handleSubmit}>
+                <form className="space-y-5 text-slate-800" ref={formRef} onSubmit={handleSubmit}>
                   <div className="grid grid-cols-1 gap-5 md:grid-cols-2">
                     <div className="space-y-2">
                       <Label htmlFor="name" className="font-medium text-slate-700">
