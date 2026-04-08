@@ -324,19 +324,23 @@ function Hero() {
               tools they'll actually use.
             </p>
             <div className="mb-10 flex flex-wrap gap-3">
-              <Button
-                size="lg"
-                className="cursor-pointer bg-[#DC2626] px-8 py-3 text-base font-bold text-white shadow-lg shadow-red-200 hover:bg-red-700"
-              >
-                Request a Demo
-              </Button>
-              <Button
-                size="lg"
-                variant="outline"
-                className="border-2 border-[#7F1D1D] px-8 py-3 text-base font-bold text-[#7F1D1D] hover:bg-[#7F1D1D] hover:text-white"
-              >
-                View Features
-              </Button>
+              <a href="#Contact Us">
+                <Button
+                  size="lg"
+                  className="cursor-pointer bg-[#DC2626] px-8 py-3 text-base font-bold text-white shadow-lg shadow-red-200 hover:bg-red-700"
+                >
+                  Request a Demo
+                </Button>
+              </a>
+              <a href="#Features">
+                <Button
+                  size="lg"
+                  variant="outline"
+                  className="cursor-pointer border-2 border-[#7F1D1D] px-8 py-3 text-base font-bold text-[#7F1D1D] hover:bg-[#7F1D1D] hover:text-white"
+                >
+                  View Features
+                </Button>
+              </a>
             </div>
             <div className="flex flex-wrap gap-3">
               {["HIPAA Ready", "Multi-Clinic", "PDF Reports", "QR Access"].map(
